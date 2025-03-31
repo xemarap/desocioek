@@ -1,6 +1,6 @@
 # DeSocioEk - Socioeconomic Index and Area Classification Methods
 
-This document outlines the methodology used in the DeSocioEk package for calculating the socioeconomic index and classifying areas (DeSO - Demographic Statistical Areas) based on this index. The methods follow the official methodology used by Statistics Sweden (SCB).
+This document outlines the methodology used in the DeSocioEk package for calculating the socioeconomic index and classifying areas (DeSO - Demographic Statistical Areas) based on this index. The calculation methods follow the official methodology used by Statistics Sweden (SCB). However, the indicator "C. Percentage of People Unemployed (Ages 20-65)" is different from the SCB implementation on RegSO level, which uses "Percentage of People with Economic Assistance and/or Long-term Unemployment (Ages 20-65)". This is due to the lack of public availability of the exact same indicators on DeSO level.
 
 ## 1. Socioeconomic Index Calculation
 
@@ -10,7 +10,7 @@ The socioeconomic index is a composite measure based on three indicators that re
 
 The three indicators used in the calculation are:
 
-#### A. Percentage of People with Pre-High School Education (Ages 20-65)
+#### A. Percentage of People with Pre-High School Education (Ages 25-65)
 
 This indicator measures the percentage of residents aged 25-65 in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`.
 
@@ -33,7 +33,7 @@ Socioeconomic Index = (Indicator A + Indicator B + Indicator C) / 3
 Where:
 - Indicator A: Percentage with pre-high school education (0-100)
 - Indicator B: Percentage with low economic standard (0-100)
-- Indicator C: Percentage unemployed (0-100)
+- Indicator C: Percentage of people unemployed (0-100)
 
 The index value is on a scale from 0 to 100, where higher values indicate worse socioeconomic conditions:
 - 0 represents the best possible socioeconomic conditions
