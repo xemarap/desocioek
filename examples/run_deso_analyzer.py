@@ -6,7 +6,7 @@ from desocioek.deso_analyzer import DesoAnalyzer
 analyzer = DesoAnalyzer(language="sv")
 
 # Define the years you want to analyze
-## 2023 is the latest possible year du to CKM
+## 2023 is the latest possible year due to CKM
 years = [2023]
 
 #---------------RUN ANALYSIS-------------------
