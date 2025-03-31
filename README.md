@@ -4,13 +4,28 @@ A Python package for analyzing socioeconomic data at DeSO (Demographic Statistic
 
 ## Installation
 
+### Prerequisites
+
+Since pxstatspy is not yet available on PyPI, you'll need to install it from GitHub first:
+
+```bash
+# Install pxstatspy from GitHub
+pip install git+https://github.com/xemarap/pxstatspy.git
+```
+After installing pxstatspy you can install desocioek from GitHub with:
+
+```bash
+# Install desocioek from GitHub
+pip install git+https://github.com/xemarap/desocioek.git
+```
+
 ### Development Installation
 
-To install the package in development mode:
+To install the package in development mode you can use this, but make sure pxstatspy is installed first:
 
 ```bash
 # Clone the repository
-git clone https://github.com/xemarap/desocioek.git
+git clone https://github.com/yourusername/desocioek.git
 cd desocioek
 
 # Install in development mode
