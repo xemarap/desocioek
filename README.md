@@ -10,7 +10,7 @@ To install the package in development mode:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/desocioek.git
+git clone https://github.com/xemarap/desocioek.git
 cd desocioek
 
 # Install in development mode
