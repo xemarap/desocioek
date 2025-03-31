@@ -28,7 +28,7 @@ from desocioek.deso_analyzer import DesoAnalyzer
 analyzer = DesoAnalyzer(language="sv")
 
 # Analyze data for the specified years
-years = [2022, 2023]
+years = [2023]
 
 # Calculate socioeconomic index
 index_df = analyzer.calculate_socioeconomic_index(years)
@@ -67,4 +67,4 @@ python -m tests.test_fetch_education
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/xemarap/desocioek/blob/main/LICENSE.md)
