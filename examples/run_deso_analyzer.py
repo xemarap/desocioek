@@ -35,15 +35,6 @@ if index_df is not None:
     })
     print(area_type_summary)
     
-    # Get summary by county
-    print("\nSummary by county:")
-    county_summary = classified_df.groupby(['lan']).agg({
-        'deso': 'count',
-        'area_type': 'mean',
-        'socioeconomic_index': 'mean'
-    }).sort_values('socioeconomic_index')
-    print(county_summary)
-    
     # Save the classified results
     classified_file = "deso_area_classifications.csv"
     classified_df.to_csv(classified_file, index=False)
