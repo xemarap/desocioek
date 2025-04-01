@@ -1,6 +1,6 @@
 # DeSocioEk
 
-A Python package for analyzing socioeconomic data at DeSO (Demographic Statistical Areas) level using the Statistics Sweden (SCB) API.
+A Python package for generating a socioeconomic index and classifying areas at DeSO (Demographic Statistical Areas) level for all areas in Sweden. The package uses the [PxStatsPy](https://github.com/xemarap/pxstatspy) package to automatically fetch the relevant data with the Statistics Sweden (SCB) API.
 
 ## Installation
 
