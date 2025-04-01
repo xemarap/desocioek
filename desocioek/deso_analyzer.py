@@ -1,5 +1,5 @@
 """
-SCB DeSO Socioeconomic Analysis Package
+DeSO Socioeconomic Analysis Package
 Fetches data at DeSO level from Statistics Sweden (SCB) and performs
 socioeconomic analysis similar to the RegSO level analysis.
 """
