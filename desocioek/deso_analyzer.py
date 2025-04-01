@@ -25,15 +25,6 @@ class DesoAnalyzer:
         )
         self.client = PxAPI(config)
         self.cache = {}  # Cache for storing fetched data
-        
-    def fetch_tables_with_deso(self):
-        """Find tables that contain DeSO level data by searching for the term 'DeSO'"""
-        # Search for tables containing DeSO data
-        tables_df = self.client.find_tables_as_dataframe(
-            query="DeSO",
-            all_pages=True
-        )
-        return tables_df
     
     def fetch_educational_level(self, years):
         """
@@ -45,7 +36,7 @@ class DesoAnalyzer:
         Returns:
             DataFrame with educational level data as percentage (0-100)
         """
-        table_id = "TAB5956"  # Updated table ID for educational level data
+        table_id = "TAB5956"
     
         print(f"Fetching educational level data for years: {years}")
     
@@ -59,7 +50,7 @@ class DesoAnalyzer:
                     "Tid": years_str,
                     "Region": ["*"],  # All regions
                     "UtbildningsNiva": ["*"],  # All education levels
-                    "ContentsCode": ["000005MO"]  # Updated content code
+                    "ContentsCode": ["000005MO"]
                 },
                 region_type="deso",  # Filter for DeSO regions only
                 clean_colnames=True
@@ -124,7 +115,7 @@ class DesoAnalyzer:
         Returns:
             DataFrame with low economic standard data as percentage (0-100)
         """
-        table_id = "TAB6436"  # Updated table ID for economic standard data
+        table_id = "TAB6436"
     
         print(f"Fetching economic standard data for years: {years}")
     
@@ -138,7 +129,7 @@ class DesoAnalyzer:
                     "Tid": years_str,
                     "Region": ["*"],  # All regions
                     "Alder": ["tot"],  # Total age group
-                    "ContentsCode": ["000007OQ"]  # Updated content code for low economic standard
+                    "ContentsCode": ["000007OQ"]
                 },
                 region_type="deso",  # Filter for DeSO regions only
                 clean_colnames=True
@@ -195,7 +186,7 @@ class DesoAnalyzer:
         Returns:
             DataFrame with unemployment rate data as percentage (0-100)
         """
-        table_id = "TAB5551"  # Updated table ID for unemployment data
+        table_id = "TAB5551"
     
         print(f"Fetching unemployment rate data for years: {years}")
     
@@ -210,7 +201,7 @@ class DesoAnalyzer:
                     "Region": ["*"],  # All regions
                     "Kon": ["1+2"],  # Both men and women
                     "Alder": ["20-64"],  # Age group 20-64 years
-                    "ContentsCode": ["0000079T", "0000077H"]  # Unemployment rate content codes
+                    "ContentsCode": ["0000079T", "0000077H"]
                 },
                 region_type="deso",  # Filter for DeSO regions only
                 clean_colnames=True
@@ -271,7 +262,7 @@ class DesoAnalyzer:
         # Fetch all three indicators
         results["educational_level"] = self.fetch_educational_level(years)
         results["economic_standard"] = self.fetch_economic_standard(years)
-        results["unemployment_rate"] = self.fetch_unemployment_rate(years)  # Updated function name
+        results["unemployment_rate"] = self.fetch_unemployment_rate(years)
     
         return results
 
@@ -292,7 +283,7 @@ class DesoAnalyzer:
         # Get DataFrames from cache
         education_df = self.cache.get("educational_level")
         economic_df = self.cache.get("economic_standard")
-        unemployment_df = self.cache.get("unemployment_rate")  # Updated variable name
+        unemployment_df = self.cache.get("unemployment_rate")
     
         # Check if all data is available
         if education_df is None or economic_df is None or unemployment_df is None:
@@ -302,7 +293,7 @@ class DesoAnalyzer:
         # Prepare for merging - select only necessary columns
         education_df = education_df[["region_code", "region", "ar", "education_percentage"]]
         economic_df = economic_df[["region_code", "region", "ar", "low_economic_standard_percentage"]]
-        unemployment_df = unemployment_df[["region_code", "region", "ar", "unemployment_rate_percentage"]]  # Updated column name
+        unemployment_df = unemployment_df[["region_code", "region", "ar", "unemployment_rate_percentage"]]
     
         # Merge all three indicators on region_code and year
         merged_df = pd.merge(
@@ -314,7 +305,7 @@ class DesoAnalyzer:
     
         merged_df = pd.merge(
             merged_df,
-            unemployment_df,  # Updated variable name
+            unemployment_df,
             on=["region_code", "region", "ar"],
             how="inner"
         )
@@ -323,7 +314,7 @@ class DesoAnalyzer:
         merged_df["socioeconomic_index"] = (
             merged_df["education_percentage"] + 
             merged_df["low_economic_standard_percentage"] + 
-            merged_df["unemployment_rate_percentage"]  # Updated column name
+            merged_df["unemployment_rate_percentage"]
         ) / 3
 
         # Rename region_code to deso and drop the duplicate region column
@@ -340,8 +331,8 @@ class DesoAnalyzer:
         Args:
             index_df: DataFrame with calculated socioeconomic index
             method: Method to use for classification:
-                - "regso_boundaries": Use the same boundaries as RegSO (recommended for consistency)
-                - "deso_statistics": Calculate boundaries based on DeSO statistics
+                - "regso_boundaries": Use the same boundaries as RegSO (future development)
+                - "deso_statistics": Calculate boundaries based on DeSO statistics (default)
             
         Returns:
             DataFrame with area type classifications and geographic information
@@ -424,4 +415,3 @@ class DesoAnalyzer:
             return 4  # Areas with good socioeconomic conditions
         else:
             return 5  # Areas with very good socioeconomic conditions
-
