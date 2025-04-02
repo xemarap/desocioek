@@ -12,15 +12,15 @@ The three indicators used in the calculation are:
 
 #### A. Percentage of People with Pre-High School Education (Ages 25-65)
 
-This indicator measures the percentage of residents aged 25-65 in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`.
+This indicator measures the percentage of residents aged 25-65 (25-64 before 2023) in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`.
 
 #### B. Percentage of People with Low Economic Standard (All Ages)
 
 This indicator measures the percentage of residents of all ages in a DeSO area who live in households with low economic standard. Low economic standard is defined as having a disposable income less than 60% of the national median disposable income. This data is fetched from Statistics Sweden using the table ID `TAB6436`.
 
-#### C. Percentage of People Unemployed (Ages 20-65)
+#### C. Percentage of People Unemployed (Ages 20-64)
 
-This indicator measures the percentage of residents aged 20-65 in a DeSO area who has the status unemployed. This data is fetched from Statistics Sweden using the table ID `TAB5551`.
+This indicator measures the percentage of residents aged 20-64 in a DeSO area who has the status unemployed. This data is fetched from Statistics Sweden using the table ID `TAB5551`.
 
 ### 1.2 Calculation Method
 
