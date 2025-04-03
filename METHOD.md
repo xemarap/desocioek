@@ -12,11 +12,7 @@ The three indicators used in the calculation are:
 
 #### A. Percentage of People with Pre-High School Education (Ages 25-65)
 
-<<<<<<< HEAD
 This indicator measures the percentage of residents aged 25-65 in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`, the percentage of people with pre-high school education is then calculated and stored in variable `education_percentage`.
-=======
-This indicator measures the percentage of residents aged 25-65 (25-64 before 2023) in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`.
->>>>>>> 0a7946906d4ec37370cde35379cfbedf249fbf8b
 
 #### B. Percentage of People with Low Economic Standard (All Ages)
 
@@ -24,11 +20,7 @@ This indicator measures the percentage of residents of all ages in a DeSO area w
 
 #### C. Percentage of People Unemployed (Ages 20-64)
 
-<<<<<<< HEAD
 This indicator measures the percentage of residents aged 20-64 in a DeSO area who has the status unemployed. This data is fetched from Statistics Sweden using the table ID `TAB5551`, the unemployment rate is then calculated and stored in variable `unemployment_rate_percentage`.
-=======
-This indicator measures the percentage of residents aged 20-64 in a DeSO area who has the status unemployed. This data is fetched from Statistics Sweden using the table ID `TAB5551`.
->>>>>>> 0a7946906d4ec37370cde35379cfbedf249fbf8b
 
 ### 1.2 Calculation Method
 
@@ -188,11 +180,5 @@ When analyzing socioeconomic index data and area classifications, consider the f
 
 This methodology is based on Statistics Sweden's approach to socioeconomic index calculation and area classification. For more information, refer to:
 
-<<<<<<< HEAD
 - Statistics Sweden (SCB) documentation on RegSO classifications
 - "Indelning i områdestyper efter socioekonomiskt index" (SCB, 2025-01-13)
-=======
-- Statistics Sweden (SCB) documentation on RegSO and DeSO classifications
-- "Indelning i områdestyper efter socioekonomiskt index" (SCB, 2025-01-13)
-- Government commission on integration data (Regeringsuppdraget Registerdata för integration)
->>>>>>> 0a7946906d4ec37370cde35379cfbedf249fbf8b
