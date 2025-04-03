@@ -11,17 +11,14 @@ from pxstatspy import PxAPI, PxAPIConfig, OutputFormat, OutputFormatParam
 class DesoAnalyzer:
     """Class for fetching and analyzing DeSO level socioeconomic data"""
     
-    def __init__(self, language="sv"):
+    def __init__(self):
         """
         Initialize the DesoAnalyzer with SCB API client
-        
-        Args:
-            language: API language ("en" for English or "sv" for Swedish)
         """
         # Set up SCB API client
         config = PxAPIConfig(
             base_url="https://api.scb.se/OV0104/v2beta/api/v2",
-            language=language
+            language="sv"
         )
         self.client = PxAPI(config)
         self.cache = {}  # Cache for storing fetched data
@@ -136,8 +133,7 @@ class DesoAnalyzer:
             )
         
             print(f"Processing economic standard data for {len(df)} rows")
-            print(f"Available columns in economic standard data: {df.columns.tolist()}")
-        
+            
             # This data should already be in percentage format (0-100), but we'll verify
             # and standardize the column names
         
@@ -208,12 +204,6 @@ class DesoAnalyzer:
             )
         
             print(f"Processing unemployment data for {len(df)} rows")
-        
-            # Check what columns are actually available
-            print(f"Available columns in unemployment data: {df.columns.tolist()}")
-        
-            # Based on the sample data, we expect columns like:
-            # region_code, region, kon, alder, ar, antal_arbetslosa, antal_sysselsatta_och_arbetslosa_arbetskraften
         
             # Pivot the data to calculate unemployment percentage
             # First, check if the expected columns exist
@@ -323,56 +313,36 @@ class DesoAnalyzer:
     
         return merged_df
     
-    def classify_area_types(self, index_df, method="deso_statistics"):
+    def classify_area_types(self, index_df):
         """
         Classify DeSO regions into area types based on socioeconomic index and
         add municipality and county information
-    
+
         Args:
             index_df: DataFrame with calculated socioeconomic index
-            method: Method to use for classification:
-                - "regso_boundaries": Use the same boundaries as RegSO (future development)
-                - "deso_statistics": Calculate boundaries based on DeSO statistics (default)
             
         Returns:
             DataFrame with area type classifications and geographic information
         """
         from desocioek.codes import get_kommun_name, get_lan_name
-    
+
         result_df = index_df.copy()
-    
+
         # Group by year to calculate statistics for each year
         for year, year_df in result_df.groupby("ar"):
             # Calculate statistics for the year
             mean = year_df["socioeconomic_index"].mean()
             std = year_df["socioeconomic_index"].std()
-        
+    
             # Get mask for this year
             year_mask = result_df["ar"] == year
+    
+            # Use DeSO statistics for boundaries
+            result_df.loc[year_mask, "area_type"] = result_df.loc[year_mask].apply(
+                lambda row: self._get_area_type(row["socioeconomic_index"], mean, std),
+                axis=1
+            )
         
-            if method == "regso_boundaries":
-                # For consistency with RegSO, use the RegSO boundaries
-                # We would need to fetch the RegSO index statistics for this year
-                # Here we're simulating it with hardcoded values based on the provided documents
-                # In production, these should be fetched from the API
-            
-                # Example statistics from the document for 2022 (would need to be fetched for each year)
-                regso_mean = 9.10  # From 2022 data in the document
-                regso_std = 5.47   # From 2022 data in the document
-            
-                # Use RegSO statistics for boundaries
-                result_df.loc[year_mask, "area_type"] = result_df.loc[year_mask].apply(
-                    lambda row: self._get_area_type(row["socioeconomic_index"], regso_mean, regso_std),
-                    axis=1
-                )
-            
-            else:  # "deso_statistics"
-                # Use DeSO statistics for boundaries
-                result_df.loc[year_mask, "area_type"] = result_df.loc[year_mask].apply(
-                    lambda row: self._get_area_type(row["socioeconomic_index"], mean, std),
-                    axis=1
-                )
-            
         # Add description of area type
         result_df["area_type_description"] = result_df["area_type"].map({
             1: "Områden med stora socioekonomiska utmaningar",
@@ -381,16 +351,16 @@ class DesoAnalyzer:
             4: "Områden med goda socioekonomiska förutsättningar",
             5: "Områden med mycket goda socioekonomiska förutsättningar"
         })
-    
+
         # Extract municipality and county codes from deso column
         # DeSO codes format: first 4 characters are municipality code, first 2 are county code
         if "deso" in result_df.columns:
             # Add kommun (municipality) name
             result_df["kommun"] = result_df["deso"].str[:4].apply(get_kommun_name)
-        
+    
             # Add län (county) name
             result_df["lan"] = result_df["deso"].str[:2].apply(get_lan_name)
-    
+
         return result_df
     
     def _get_area_type(self, index_value, mean, std):

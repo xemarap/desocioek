@@ -2,7 +2,7 @@ import pandas as pd
 from desocioek.deso_analyzer import DesoAnalyzer
 
 # Create an analyzer instance
-analyzer = DesoAnalyzer(language="sv")
+analyzer = DesoAnalyzer()
 
 # Define the years to analyze
 years_to_analyze = [2020, 2021, 2022, 2023]
@@ -27,7 +27,7 @@ for year in years_to_analyze:
         print(f"Fetching data for year {year}...")
         
         # Create a new analyzer instance for each year to avoid any caching issues
-        year_analyzer = DesoAnalyzer(language="sv")
+        year_analyzer = DesoAnalyzer()
         
         # Calculate the socioeconomic index for just this one year
         print(f"Calculating socioeconomic index for {year}...")

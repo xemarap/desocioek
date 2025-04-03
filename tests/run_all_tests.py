@@ -8,7 +8,7 @@ from desocioek.deso_analyzer import DesoAnalyzer
 def test_educational_level():
     """Test the fetch_educational_level function"""
     print("\n----- TESTING EDUCATIONAL LEVEL DATA -----")
-    analyzer = DesoAnalyzer(language="sv")
+    analyzer = DesoAnalyzer()
     year = [2023]
     df = analyzer.fetch_educational_level(year)
     
@@ -24,7 +24,7 @@ def test_educational_level():
 def test_economic_standard():
     """Test the fetch_economic_standard function"""
     print("\n----- TESTING ECONOMIC STANDARD DATA -----")
-    analyzer = DesoAnalyzer(language="sv")
+    analyzer = DesoAnalyzer()
     year = [2023]
     df = analyzer.fetch_economic_standard(year)
     
@@ -40,7 +40,7 @@ def test_economic_standard():
 def test_unemployment_rate():
     """Test the fetch_unemployment_rate function"""
     print("\n----- TESTING UNEMPLOYMENT RATE DATA -----")
-    analyzer = DesoAnalyzer(language="sv")
+    analyzer = DesoAnalyzer()
     year = [2023]
     df = analyzer.fetch_unemployment_rate(year)
     
@@ -56,7 +56,7 @@ def test_unemployment_rate():
 def test_index_calculation():
     """Test the calculate_socioeconomic_index function"""
     print("\n----- TESTING INDEX CALCULATION -----")
-    analyzer = DesoAnalyzer(language="sv")
+    analyzer = DesoAnalyzer()
     year = [2023]
     df = analyzer.calculate_socioeconomic_index(year)
     
@@ -72,7 +72,7 @@ def test_index_calculation():
 def test_area_classification():
     """Test the classify_area_types function"""
     print("\n----- TESTING AREA CLASSIFICATION -----")
-    analyzer = DesoAnalyzer(language="sv")
+    analyzer = DesoAnalyzer()
     year = [2023]
     index_df = analyzer.calculate_socioeconomic_index(year)
     

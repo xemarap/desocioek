@@ -4,6 +4,17 @@ A Python package for generating a socioeconomic index and classifying areas at D
 
 ## Installation
 
+### Requirements
+
+The DeSocioEk package requires:
+
+- Python 3.7 or higher
+- pandas
+- numpy
+- pxstatspy (not available on PyPI, must be installed from GitHub)
+
+The package relies heavily on the PxStatsPy wrapper for accessing Statistics Sweden's API. Make sure to install PxStatsPy before installing DeSocioEk.
+
 ### Prerequisites
 
 Since pxstatspy is not yet available on PyPI, you'll need to install it from GitHub first:
@@ -40,7 +51,7 @@ pip install -e .
 from desocioek.deso_analyzer import DesoAnalyzer
 
 # Create an analyzer instance
-analyzer = DesoAnalyzer(language="sv")
+analyzer = DesoAnalyzer()
 
 # Analyze data for the specified years
 years = [2023]
@@ -63,23 +74,14 @@ classified_df.to_csv("deso_classifications.csv", index=False)
 - `calculate_socioeconomic_index(years)`: Calculate the socioeconomic index
 - `classify_area_types(index_df)`: Classify areas into socioeconomic types
 
-## Running Examples
+## Contributing
 
-```bash
-# Run examples
-python -m examples.run_deso_analyzer
-```
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
-## Running Tests
-
-```bash
-# Run all tests
-python -m tests.run_all_tests
-
-# Run a specific test
-python -m tests.test_fetch_education
-```
+- Submit suggestions and report bugs
+- Open a Pull Request
+- Star the GitHub page
 
 ## License
 
-[MIT](https://github.com/xemarap/desocioek/blob/main/LICENSE.md)
+This project is licensed under the [MIT License](https://github.com/xemarap/desocioek/blob/main/LICENSE.md)

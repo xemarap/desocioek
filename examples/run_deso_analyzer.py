@@ -2,8 +2,7 @@
 from desocioek.deso_analyzer import DesoAnalyzer
 
 # Create an analyzer instance
-# You can use either "sv" (Swedish) or "en" (English) for the language
-analyzer = DesoAnalyzer(language="sv")
+analyzer = DesoAnalyzer()
 
 # Define the years you want to analyze
 years = [2023]

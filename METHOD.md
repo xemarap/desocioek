@@ -1,6 +1,6 @@
 # DeSocioEk - Socioeconomic Index and Area Classification Methods
 
-This document outlines the methodology used in the DeSocioEk package for calculating the socioeconomic index and classifying areas (DeSO - Demographic Statistical Areas) based on this index. The calculation methods follow the official methodology used by Statistics Sweden (SCB). However, the indicator "C. Percentage of People Unemployed (Ages 20-65)" is different from the SCB implementation on RegSO level, which uses "Percentage of People with Economic Assistance and/or Long-term Unemployment (Ages 20-65)". This is due to the lack of public availability of the exact same indicators on DeSO level.
+This document outlines the methodology used in the DeSocioEk package for calculating the socioeconomic index and classifying areas (DeSO - Demographic Statistical Areas) based on this index. The calculation methods follow the official methodology used by Statistics Sweden (SCB). However, the indicator "C. Percentage of People Unemployed (Ages 20-64)" is different from the SCB implementation on RegSO level, which uses "Percentage of People with Economic Assistance and/or Long-term Unemployment (Ages 20-65)". This is due to the lack of public availability of the exact same indicator on DeSO level. Depending on the future availability of public data on DeSO level, this package may be modified to more precisely resemble the SCB implementation.
 
 ## 1. Socioeconomic Index Calculation
 
@@ -12,15 +12,15 @@ The three indicators used in the calculation are:
 
 #### A. Percentage of People with Pre-High School Education (Ages 25-65)
 
-This indicator measures the percentage of residents aged 25-65 in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`.
+This indicator measures the percentage of residents aged 25-65 in a DeSO area whose highest level of education is pre-high school education ("förgymnasial utbildning"). This includes education of less than nine years or the equivalent of nine years of schooling. This data is fetched from Statistics Sweden using the table ID `TAB5956`, the percentage of people with pre-high school education is then calculated and stored in variable `education_percentage`.
 
 #### B. Percentage of People with Low Economic Standard (All Ages)
 
-This indicator measures the percentage of residents of all ages in a DeSO area who live in households with low economic standard. Low economic standard is defined as having a disposable income less than 60% of the national median disposable income. This data is fetched from Statistics Sweden using the table ID `TAB6436`.
+This indicator measures the percentage of residents of all ages in a DeSO area who live in households with low economic standard. Low economic standard is defined as having a disposable income less than 60% of the national median disposable income. This data is fetched from Statistics Sweden using the table ID `TAB6436` and stored in the variable `low_economic_standard_percentage`.
 
-#### C. Percentage of People Unemployed (Ages 20-65)
+#### C. Percentage of People Unemployed (Ages 20-64)
 
-This indicator measures the percentage of residents aged 20-65 in a DeSO area who has the status unemployed. This data is fetched from Statistics Sweden using the table ID `TAB5551`.
+This indicator measures the percentage of residents aged 20-64 in a DeSO area who has the status unemployed. This data is fetched from Statistics Sweden using the table ID `TAB5551`, the unemployment rate is then calculated and stored in variable `unemployment_rate_percentage`.
 
 ### 1.2 Calculation Method
 
@@ -120,21 +120,31 @@ def calculate_socioeconomic_index(self, years):
 Areas are classified based on their index values and the selected classification method:
 
 ```python
-def classify_area_types(self, index_df, method="deso_statistics"):
+def classify_area_types(self, index_df):
     """Classify DeSO regions into area types"""
     # For each year in the data
     for year, year_df in result_df.groupby("ar"):
-        # Calculate statistics for the year
-        mean = year_df["socioeconomic_index"].mean()
-        std = year_df["socioeconomic_index"].std()
-        
-        # Apply classification function to each row
-        result_df.loc[year_mask, "area_type"] = result_df.loc[year_mask].apply(
-            lambda row: self._get_area_type(row["socioeconomic_index"], mean, std),
-            axis=1
-        )
+            # Calculate statistics for the year
+            mean = year_df["socioeconomic_index"].mean()
+            std = year_df["socioeconomic_index"].std()
     
-    return result_df
+            # Get mask for this year
+            year_mask = result_df["ar"] == year
+    
+            # Use DeSO statistics for boundaries
+            result_df.loc[year_mask, "area_type"] = result_df.loc[year_mask].apply(
+                lambda row: self._get_area_type(row["socioeconomic_index"], mean, std),
+                axis=1
+            )
+        
+        # Add description of area type
+        result_df["area_type_description"] = result_df["area_type"].map({
+            1: "Områden med stora socioekonomiska utmaningar",
+            2: "Områden med socioekonomiska utmaningar",
+            3: "Socioekonomiskt blandade områden",
+            4: "Områden med goda socioekonomiska förutsättningar",
+            5: "Områden med mycket goda socioekonomiska förutsättningar"
+        })
 
 def _get_area_type(self, index_value, mean, std):
     """Determine area type based on index value, mean, and standard deviation"""
@@ -170,6 +180,5 @@ When analyzing socioeconomic index data and area classifications, consider the f
 
 This methodology is based on Statistics Sweden's approach to socioeconomic index calculation and area classification. For more information, refer to:
 
-- Statistics Sweden (SCB) documentation on RegSO and DeSO classifications
+- Statistics Sweden (SCB) documentation on RegSO classifications
 - "Indelning i områdestyper efter socioekonomiskt index" (SCB, 2025-01-13)
-- Government commission on integration data (Regeringsuppdraget Registerdata för integration)

@@ -2,7 +2,7 @@
 from desocioek.deso_analyzer import DesoAnalyzer
 
 # Create analyzer instance
-analyzer = DesoAnalyzer(language="sv")
+analyzer = DesoAnalyzer()
 
 # Test with just one year to start
 year = [2023]
