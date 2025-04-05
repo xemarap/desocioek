@@ -11,7 +11,6 @@ setup(
     ],
     python_requires=">=3.7",
     author="Emanuel Raptis",
-    author_email="emanuelraptis@gmail.com",
     description="A package for analyzing socioeconomic data at DeSO level",
     long_description=open("README.md").read() if "README.md" else "",
     long_description_content_type="text/markdown",
