@@ -85,3 +85,12 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 ## License
 
 This project is licensed under the [MIT License](https://github.com/xemarap/desocioek/blob/main/LICENSE.md)
+
+## Acknowledgements
+
+This project uses the following open source packages:
+- [numpy](https://github.com/numpy)
+- [pandas](https://github.com/pandas-dev/pandas)
+- [pxstatspy](https://github.com/xemarap/pxstatspy)
+
+The full license texts are available in the LICENSES directory.

@@ -17,6 +17,7 @@ setup(
     url="https://github.com/xemarap/desocioek",
     classifiers=[
         "Development Status :: 3 - Alpha",
+        "License :: OSI Approved :: MIT License"
         "Intended Audience :: Developers, Analysts",
         "Programming Language :: Python :: 3"
     ]

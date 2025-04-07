@@ -76,6 +76,7 @@ pxstatspy.py
 
 # Explicitly track only specified folders and files
 /*
+!/LICENSES/
 !/desocioek/
 !/examples/
 !/tests/
