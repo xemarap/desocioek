@@ -17,7 +17,7 @@ class DesoAnalyzer:
         """
         # Set up SCB API client
         config = PxAPIConfig(
-            base_url="https://api.scb.se/OV0104/v2beta/api/v2",
+            base_url="https://statistikdatabasen.scb.se/api/v2",
             language="sv"
         )
         self.client = PxAPI(config)
